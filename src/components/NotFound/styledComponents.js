@@ -1,23 +1,43 @@
 import styled from 'styled-components'
 
 export const NotFoundContainer = styled.div`
-  min-height: 100vh;
-  background-color: ${props => (props.darkMode ? '#181818' : '#f9f9f9')};
-  display: flex;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color: ${props => props.bgColor}
+  min-height:92vh;
+  margin-top:60px;
+  @media screen and (min-width:768px){
+      margin-left:250px;
+      margin-bottom:0px
+  }
+
 `
-export const NotFoundContentContainer = styled.div`
-  min-height: 100px;
-  margin-top: 80px;
-  width: 88%;
-  padding: 25px;
+
+export const NotFoundVideosView = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-export const NotFoundImage = styled.img`
-  width: 50%;
+  background: none;
 `
 
-export const NotFoundText = styled.h1``
+export const NotFoundVideosImage = styled.img`
+  width: 280px;
+  @media screen and (min-width: 768px) {
+    width: 450px;
+  }
+`
 
-export const SorryMsg = styled.p``
+export const NotFoundVideosHeading = styled.h1`
+  font-family: 'Roboto';
+  font-size: 24px;
+  color: ${props => props.headingColor};
+  text-align: center;
+`
+
+export const NotFoundVideosNote = styled.p`
+  font-family: 'Roboto';
+  font-size: 15px;
+  color: ${props => props.noteColor};
+  text-align: center;
+`

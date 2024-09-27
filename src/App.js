@@ -1,18 +1,29 @@
-import './App.css'
 import {Component} from 'react'
+
 import {Route, Switch, Redirect} from 'react-router-dom'
-import Login from './components/Login'
-import Home from './components/Home'
+
 import ProtectedRoute from './components/ProtectedRoute'
-import ThemeContext from './context/ThemeContext'
-import Gaming from './components/Gaming'
-import Trending from './components/Trending'
-import SavedVideos from './components/SavedVideos'
-import VideoItemDetails from './components/VideoItemDetails'
+import LoginForm from './components/LoginForm'
+import Home from './components/Home'
+import VideoDetailView from './components/VideoDetailView'
+import TrendingVideos from './components/TrendingVideos'
+import GamingVideos from './components/GamingVideos'
 import NotFound from './components/NotFound'
 
+import ThemeAndVideoContext from './context/ThemeAndVideoContext'
+
+import './App.css'
+
 class App extends Component {
-  state = {isDarkTheme: false, savedVideosList: []}
+  state = {
+    savedVideos: [],
+    isDarkTheme: false,
+    activeTab: 'None',
+  }
+
+  changeTab = tab => {
+    this.setState({activeTab: tab})
+  }
 
   toggleTheme = () => {
     this.setState(prevState => ({
@@ -20,44 +31,58 @@ class App extends Component {
     }))
   }
 
-  /*
-  toggleTabId = id => {
-    this.setState({activeTabId: id})
-  }
-  */
+  addVideo = video => {
+    const {savedVideos} = this.state
+    const index = savedVideos.findIndex(eachVideo => eachVideo.id === video.id)
 
-  saveVideoButtonClicked = data => {
-    const {savedVideosList} = this.state
-    this.setState({savedVideosList: [...savedVideosList, data]})
+    if (index === -1) {
+      this.setState({savedVideos: [...savedVideos, video]})
+    } else {
+      savedVideos.splice(index, 1)
+      this.setState({savedVideos})
+    }
+  }
+
+  removeVideo = id => {
+    const {savedVideos} = this.state
+
+    const updatedSavedVideos = savedVideos.filter(
+      eachVideo => eachVideo.id !== id,
+    )
+
+    this.setState({savedVideos: updatedSavedVideos})
   }
 
   render() {
-    const {isDarkTheme, savedVideosList} = this.state
+    const {savedVideos, isDarkTheme, activeTab} = this.state
 
     return (
-      <ThemeContext.Provider
+      <ThemeAndVideoContext.Provider
         value={{
+          savedVideos,
           isDarkTheme,
+          activeTab,
           toggleTheme: this.toggleTheme,
-          saveVideoButtonClicked: this.saveVideoButtonClicked,
-          savedVideosList,
+          addVideo: this.addVideo,
+          changeTab: this.changeTab,
         }}
       >
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/login" component={LoginForm} />
           <ProtectedRoute exact path="/" component={Home} />
-          <ProtectedRoute exact path="/trending" component={Trending} />
-          <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
-          <ProtectedRoute exact path="/gaming" component={Gaming} />
           <ProtectedRoute
             exact
             path="/videos/:id"
-            component={VideoItemDetails}
+            component={VideoDetailView}
           />
+
+          <ProtectedRoute exact path="/trending" component={TrendingVideos} />
+          <ProtectedRoute exact path="/gaming" component={GamingVideos} />
+          <ProtectedRoute exact path="/saved-videos" component={savedVideos} />
           <Route path="/not-found" component={NotFound} />
           <Redirect to="not-found" />
         </Switch>
-      </ThemeContext.Provider>
+      </ThemeAndVideoContext.Provider>
     )
   }
 }

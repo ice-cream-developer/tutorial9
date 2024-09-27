@@ -1,66 +1,77 @@
 import styled from 'styled-components'
 
-export const SavedVideosContainer = styled.div`
-  min-height: 100vh;
-  background-color: ${props => (props.darkMode ? '#0f0f0f' : '#f9f9f9')};
-  display: flex;
+export const SavedContainer = styled.div` 
+  background-color:${props => props.bgColor}
+  min-height:100vh;
+  margin-top:60px;
+  margin-bottom:60px;
+  overflow-y:auto;
+  @media screen and (min-width:768px){
+       margin-left:250px;
+       margin-bottom:0px;
+
+  }
 `
 
-export const SavedVideosContentContainer = styled.div`
-  min-height: 100px;
-  width: 88%;
-  padding: 25px;
-  margin-top: 50px;
-`
-
-export const VideosContainer = styled.ul`
+export const SavedVideoTitle = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  min-height: 80vh;
-  margin-top: 0px;
-  list-style-type: none;
-  padding-left: 0px;
-  width: 100%;
-`
-export const NoSavedVideosContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 50px;
 `
 
-export const NoSavedVideos = styled.img`
-  width: 50%;
-`
-export const NoSavesVideosText = styled.h1`
-  color: ${props => (!props.darkMode ? '#0f0f0f' : '#f9f9f9')};
-`
-
-export const NoSavedVideosSuggestion = styled.p`
-  color: ${props => (!props.darkMode ? '#0f0f0f' : '#f9f9f9')};
-`
-export const IconContainer = styled.div`
+export const SavedTitleIconContainer = styled.div`
+  width: 48px;
+  height: 60px;
+  border-radius: 80px;
+  margin-left: 16px;
+  margin-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  width: 80px;
-  border-radius: 80px;
-  background-color: ${props => (props.darkMode ? '#0f0f0f' : '#f9f9f9')};
-  margin: 25px;
+  @media screen and(min-width:768px) {
+    margin-left: 48px;
+  }
 `
 
-export const LinkItem = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+export const SavedText = styled.h1`
+  font-family: 'Roboto';
   font-size: 25px;
-  background-color: ${props => (props.darkMode ? '#181818' : '#ffffff')};
-  color: ${props => (!props.darkMode ? 'black' : '#ffffff')};
-  height: 90px;
-  padding: 20px;
+  color: ${props => props.color} @media screen and (min-width: 768px) {
+    font-size: 35px;
+  }
 `
-export const Heading = styled.h1`
-  color: ${props => (!props.darkMode ? '#0f0f0f' : '#f9f9f9')};
+
+export const SavedVideoList = styled.ul`
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
 `
+
+export const NoSavedVideosView = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: none;
+`
+
+export const NoSavedVideosImage = styled.img`
+  width: 200px;
+  @media screen and (min-width: 768px) {
+    width: 450px;
+  }
+`
+
+export const NoSavedVideosHeading = styled.h1`  font-family:"Roboto";
+     font-size:25px;
+     color:${props => props.headingColor}
+     text-align:center;
+
+  `
+
+export const NoSavedVideosNote = styled.p`  fon-family:"Roboto";
+     font-size:25px;
+     color: ${props => props.noteColor}
+     text-align:center;
+  `
